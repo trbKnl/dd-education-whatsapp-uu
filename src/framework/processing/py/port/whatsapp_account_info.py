@@ -105,7 +105,7 @@ def ncontacts_ngroups_device_to_df(whatsapp_account_info_zip: str) -> pd.DataFra
         logger.error("Exception caught: %s", e)
 
     # Extract platform 
-    b = unzipddp.extract_file_from_zip(whatsapp_account_info_zip, "registration_info.json")
+    b = unzipddp.extract_file_from_zip(whatsapp_account_info_zip, "registration_information.json")
     d = unzipddp.read_json_from_bytes(b)
     print(d)
     try:
