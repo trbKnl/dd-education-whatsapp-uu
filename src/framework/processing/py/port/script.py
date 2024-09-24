@@ -28,6 +28,9 @@ def process(session_id):
         whatsapp_chat_flow,
     ]
 
+    #flows = [ whatsapp_chat_flow ]
+    #flows = [ whatsapp_account_info_flow ]
+
     for flow in flows:
         yield from flow(session_id)
 
