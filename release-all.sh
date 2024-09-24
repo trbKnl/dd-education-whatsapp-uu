@@ -3,8 +3,8 @@
 # build release all individual platforms
 
 script_location='./src/framework/processing/py/port/script.py'
-single_platform='flows = \[ "'
-single_platform_commented_out='#flows = \[ "'
+single_platform='flows = \[ '
+single_platform_commented_out='#flows = \[ '
 
 platforms=("whatsapp_account_info_flow" "whatsapp_chat_flow")
 
