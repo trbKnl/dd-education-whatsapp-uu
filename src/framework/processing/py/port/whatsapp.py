@@ -177,7 +177,7 @@ def extract_users(df: pd.DataFrame) -> list[str]:
     non_users = []
     for user in detected_users:
         for entry in detected_users:
-            if bool(re.match(f"{user} ", f"{entry}")):
+            if bool(re.match(f"{re.escape(user)} ", f"{entry}")):
                 non_users.append(entry)
 
     real_users = list(set(detected_users) - set(non_users))
@@ -284,11 +284,13 @@ def read_chat_file(path_to_chat_file: str) -> list[str]:
             lines = f.readlines()
 
     out = [remove_unwanted_characters(line) for line in lines]
+    #out.pop(0) # remove first element containing system message
 
     #except Exception as e:
     #    raise e
 
     return out
+
 
 def parse_chat(path_to_chat: str) -> pd.DataFrame:
     """
@@ -325,6 +327,7 @@ def parse_chat(path_to_chat: str) -> pd.DataFrame:
                 data_point = create_data_point_from_chat(current_line, regex)
                 out.append(data_point)
                 break
+
     except Exception as e:
         logger.error(e)
 
@@ -334,7 +337,7 @@ def parse_chat(path_to_chat: str) -> pd.DataFrame:
 
 
 
-def deelnemer_statistics_to_df(df: pd.DataFrame, user_name: str):
+def deelnemer_statistics_to_df(df: pd.DataFrame, user_name: str) -> None | props.PropsUIPromptConsentFormTable:
     out = None
 
     try: 
@@ -398,5 +401,8 @@ def deelnemer_statistics_to_df(df: pd.DataFrame, user_name: str):
         return out
 
     except Exception as e:
+        logger.error(e)
+
+    finally:
         return out
 

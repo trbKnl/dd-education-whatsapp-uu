@@ -24,8 +24,8 @@ LOGGER = logging.getLogger("script")
 
 def process(session_id):
     flows = [
-        whatsapp_account_info_flow,
         whatsapp_chat_flow,
+        whatsapp_account_info_flow,
     ]
 
     #flows = [ whatsapp_chat_flow ]
@@ -103,9 +103,9 @@ def whatsapp_chat_flow(session_id):
                     df = whatsapp.anonymize_users(df, users, selected_username)
                     anonymized_users_list = [ f"Deelnemer {i + 1}" for i in range(len(users))]
                     for user_name in anonymized_users_list:
-                        list_with_consent_form_tables.append(
-                            whatsapp.deelnemer_statistics_to_df(df, user_name)
-                        )
+                        statistics_table = whatsapp.deelnemer_statistics_to_df(df, user_name)
+                        if statistics_table != None:
+                            list_with_consent_form_tables.append(statistics_table)
 
                     break
 
