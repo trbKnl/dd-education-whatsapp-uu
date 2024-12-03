@@ -6,7 +6,7 @@ script_location='./src/framework/processing/py/port/script.py'
 single_platform='flows = \[ '
 single_platform_commented_out='#flows = \[ '
 
-platforms=("whatsapp_account_info_flow" "whatsapp_chat_flow")
+platforms=("whatsapp_chat_flow" "whatsapp_account_info_flow" )
 
 for platform in "${platforms[@]}"; do
     sed -i "s/$single_platform_commented_out$platform/$single_platform$platform/g" $script_location
