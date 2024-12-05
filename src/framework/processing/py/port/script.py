@@ -101,7 +101,7 @@ def whatsapp_chat_flow(session_id):
                         break
                     
                     df = whatsapp.anonymize_users(df, users, selected_username)
-                    anonymized_users_list = [ f"Deelnemer {i + 1}" for i in range(len(users))]
+                    anonymized_users_list = [ f"Member {i + 1}" for i in range(len(users))]
                     for user_name in anonymized_users_list:
                         statistics_table = whatsapp.deelnemer_statistics_to_df(df, user_name)
                         if statistics_table != None:

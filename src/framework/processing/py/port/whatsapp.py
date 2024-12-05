@@ -202,8 +202,8 @@ def anonymize_users(df: pd.DataFrame, list_with_users: list[str], user_name: str
     """
 
     users_not_you = list(set(list_with_users) - set([user_name]))
-    mapping = {user_name : f"Deelnemer {i+2}" for i, user_name in enumerate(users_not_you)}
-    mapping[user_name] = "Deelnemer 1"
+    mapping = {user_name : f"Member {i+2}" for i, user_name in enumerate(users_not_you)}
+    mapping[user_name] = "Member 1"
 
     df['name'] = df['name'].replace(mapping)
     return df
@@ -284,7 +284,7 @@ def read_chat_file(path_to_chat_file: str) -> list[str]:
             lines = f.readlines()
 
     out = [remove_unwanted_characters(line) for line in lines]
-    #out.pop(0) # remove first element containing system message
+    out.pop(0) # remove first element containing system message
 
     #except Exception as e:
     #    raise e
@@ -355,7 +355,7 @@ def deelnemer_statistics_to_df(df: pd.DataFrame, user_name: str) -> None | props
         df["op_mij"] = df[["name", "op_mij"]].apply(lambda x: ignore_self_reply(*x), axis=1)
         df["jij_op_wie"] = df[["name", "jij_op_wie"]].apply(lambda x: ignore_self_reply(*x), axis=1)
 
-        df = df.drop(df[df.name != user_name].index)
+        df = df.drop(df[df.name != user_name].index) # pyright: ignore
         df = df.reset_index(drop=True)
 
         group_df = df.groupby("name").agg(
@@ -368,36 +368,42 @@ def deelnemer_statistics_to_df(df: pd.DataFrame, user_name: str) -> None | props
         ).reset_index(drop=True)
 
         group_df.columns = [
-            "Aantal berichten", 
-            "Datum eerste bericht",
-            "Datum laatste bericht",
-            "Wie reageert het meest op u?",
-            "Op wie reageert u het meest?",
-            "Aantal woorden"
+            "Number of messages", 
+            "Date of first message",
+            "Date of last message",
+            "Who responds to you the most?",
+            "Who do you respond to the most?",
+            "Number of words"
         ]
 
         group_df = group_df[[
-            "Aantal woorden",
-            "Aantal berichten", 
-            "Datum eerste bericht",
-            "Datum laatste bericht",
-            "Wie reageert het meest op u?",
-            "Op wie reageert u het meest?"
+            "Number of words",
+            "Number of messages", 
+            "Date of first message",
+            "Date of last message",
+            "Who responds to you the most?",
+            "Who do you respond to the most?"
         ]]
 
         df_out = pd.melt(
-            group_df,
-            var_name="Omschrijving",
-            value_name="Gegevens"
+            group_df, # pyright: ignore
+            var_name="Description",
+            value_name="Value"
         )
 
-        if user_name == "Deelnemer 1":
-            title = "Dit ben jij (Deelnemer 1)"
+        if user_name == "Member 1":
+            title = "This is you (Member 1)"
+            table_title = props.Translatable({ "en": title, "nl": title })
+            description = props.Translatable({ 
+                "en": """In this table you’ll see anonymized data of each member in the Whatsapp group chat, including the total number of messages you’ve sent, the dates of your first and last messages, who responds to you the most, who you respond to the most, and the total number of words you’ve used.""",    
+                "nl": """In deze tabel zie je geanonimiseerde gegevens van elk lid in de Whatsapp-groepschat, waaronder het totale aantal berichten dat je hebt verstuurd, de data van je eerste en laatste bericht, wie het meest op jou reageert, op wie jij het meest reageert, en het totale aantal woorden dat je hebt gebruikt."""
+            })
+            out = props.PropsUIPromptConsentFormTable(f"table_id_{user_name.replace(' ', '_')}", table_title, df_out, description)
         else:
             title = user_name
+            table_title = props.Translatable({ "en": title, "nl": title })
+            out = props.PropsUIPromptConsentFormTable(f"table_id_{user_name.replace(' ', '_')}", table_title, df_out)
 
-        table_title = props.Translatable({ "en": title, "nl": title })
-        out = props.PropsUIPromptConsentFormTable(f"table_id_{user_name.replace(' ', '_')}", table_title, df_out)
         return out
 
     except Exception as e:
