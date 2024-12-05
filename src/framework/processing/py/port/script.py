@@ -122,7 +122,7 @@ def whatsapp_chat_flow(session_id):
 
             render_questionnaire_results = yield render_questionnaire_whatsapp_chat()
             if render_questionnaire_results.__type__ == "PayloadJSON":
-                yield donate(f"{id}-questionnaire-whatsapp-chat", render_questionnaire_results.value)
+                yield donate(f"{session_id}-questionnaire-whatsapp-chat", render_questionnaire_results.value)
 
     return 
 

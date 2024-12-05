@@ -217,14 +217,14 @@ function prepareCopy({ donateQuestion, donateButton, description, locale }: Prop
 }
 
 const defaultDonateQuestionLabel = new TextBundle()
-  .add('en', 'Do you want to donate the above data?')
-  .add('de', 'Möchten Sie die oben genannten Daten spenden?')
-  .add('nl', 'Wilt u de bovenstaande gegevens doneren?')
+  .add('en', 'Do you want to share the above data?')
+  .add('de', 'Möchten Sie die oben genannten Daten teilen?')
+  .add('nl', 'Wilt u de bovenstaande gegevens delen?')
 
 const defaultDonateButtonLabel = new TextBundle()
-  .add('en', 'Yes, donate')
-  .add('de', 'Ja, spenden')
-  .add('nl', 'Ja, doneer')
+  .add('en', 'Yes, share for research')
+  .add('de', 'Ja, für die Forschung teilen')
+  .add('nl', 'Ja, delen voor onderzoek')
 
 const defaultCancelButtonLabel = new TextBundle()
   .add('en', 'No')
@@ -232,6 +232,7 @@ const defaultCancelButtonLabel = new TextBundle()
   .add('nl', 'Nee')
 
 const defaultDescription = new TextBundle()
-  .add('en', 'Determine whether you would like to donate the data below. Carefully check the data and adjust when required. With your donation you contribute to the previously described research. Thank you in advance.')
-  .add('de', 'Legen Sie fest, ob Sie die untenstehenden Daten spenden möchten. Überprüfen Sie die Daten sorgfältig und passen Sie sie bei Bedarf an. Mit Ihrer Spende tragen Sie zur zuvor beschriebenen Forschung bei. Vielen Dank im Voraus.')
-  .add('nl', 'Bepaal of u de onderstaande gegevens wilt doneren. Bekijk de gegevens zorgvuldig en pas zo nodig aan. Met uw donatie draagt u bij aan het eerder beschreven onderzoek. Alvast hartelijk dank.')
+  .add('en', 'Determine whether you would like to share the data below. Carefully check the data and adjust when required. By sharing your data, you contribute to the previously described research. Thank you in advance.')
+  .add('de', 'Legen Sie fest, ob Sie die untenstehenden Daten teilen möchten. Überprüfen Sie die Daten sorgfältig und passen Sie sie bei Bedarf an. Mit dem Teilen Ihrer Daten tragen Sie zur zuvor beschriebenen Forschung bei. Vielen Dank im Voraus.')
+  .add('nl', 'Bepaal of u de onderstaande gegevens wilt delen. Bekijk de gegevens zorgvuldig en pas zo nodig aan. Met het delen van uw gegevens draagt u bij aan het eerder beschreven onderzoek. Alvast hartelijk dank.')
+
